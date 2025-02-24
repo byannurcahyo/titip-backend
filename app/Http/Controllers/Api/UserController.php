@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Helpers\User\UserHelper;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\UserRequest;
-use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
+use App\Helpers\Cart\CartHelper;
+use App\Helpers\User\UserHelper;
+use App\Http\Requests\UserRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 
 class UserController extends Controller
 {
     private $userHelper;
+    private $cartHelper;
 
     public function __construct()
     {
         $this->userHelper = new UserHelper;
+        $this->cartHelper = new CartHelper;
     }
     /**
      * Display a listing of the resource.
@@ -71,6 +74,8 @@ class UserController extends Controller
                 'message' => 'Failed to create user',
             ], 500);
         }
+        $payloadCart = ['user_id' => $user['data']->id];
+        $this->cartHelper->create($payloadCart);
         return response()->json([
             'success' => true,
             'data' => new UserResource($user['data']),

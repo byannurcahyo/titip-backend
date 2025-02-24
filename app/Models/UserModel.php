@@ -28,6 +28,26 @@ class UserModel extends Authenticatable implements CrudInterface, JWTSubject
     ];
     protected $table = 'users';
 
+    public function requestSeller()
+    {
+        return $this->hasOne( RequestSellerModel::class, 'user_id', 'id');
+    }
+    public function seller()
+    {
+        return $this->hasOne( SellerModel::class, 'user_id', 'id');
+    }
+    public function cart()
+    {
+        return $this->hasOne( CartModel::class, 'user_id', 'id');
+    }
+    public function order()
+    {
+        return $this->hasMany( OrderModel::class, 'user_id', 'id');
+    }
+    public function address()
+    {
+        return $this->hasMany( AddressModel::class, 'user_id', 'id');
+    }
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
