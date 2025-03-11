@@ -30,6 +30,7 @@ class RequestSellerController extends Controller
     {
         $filter = [
             'user_id' => $request->user_id ?? '',
+            'name' => $request->name ?? '',
             'status' => $request->status ?? '',
         ];
         $requestSellers = $this->requestSellerHelper->getAll($filter, $request->page ?? 1, $request->per_page ?? 10, $request->sort ?? '');

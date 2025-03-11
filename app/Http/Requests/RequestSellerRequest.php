@@ -49,8 +49,8 @@ class RequestSellerRequest extends FormRequest
     private function updateRules(): array
     {
         return [
-            'user_id' => 'required|exists:request_sellers,user_id',
-            'status' => 'required|in:pending,approved,rejected',
+            'user_id' => 'nullable|exists:request_sellers,user_id',
+            'status' => 'nullable|in:pending,approved,rejected',
             'reviewed_at' => 'nullable|date',
         ];
     }

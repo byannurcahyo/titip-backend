@@ -37,6 +37,11 @@ class SellerModel extends Model implements CrudInterface
     {
         $skip = ($page * $itemPerPage) - $itemPerPage;
         $request = $this->query();
+        if (!empty($filter['name'])) {
+            $request->whereHas('user', function ($query) use ($filter) {
+            $query->where('name', 'LIKE', '%' . $filter['name'] . '%');
+            })->with('user');
+        }
         if (!empty($filter['store_name'])) {
             $request->where('store_name', 'LIKE', '%'.$filter['store_name'].'%');
         }
@@ -44,7 +49,9 @@ class SellerModel extends Model implements CrudInterface
             $request->where('user_id', 'LIKE', '%'.$filter['user_id'].'%');
         }
         $total = $request->count();
-        $sort = $sort ?: 'id DESC';
+        $sort = $sort ?: 'users.name ASC, sellers.store_name ASC';
+        $request->select('sellers.*');
+        $request->join('users', 'sellers.user_id', '=', 'users.id')->orderByRaw($sort);
         $list = $request->skip($skip)->take($itemPerPage)->orderByRaw($sort)->get();
         return [
             'total' => $total,

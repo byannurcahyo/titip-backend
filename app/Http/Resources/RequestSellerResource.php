@@ -17,6 +17,7 @@ class RequestSellerResource extends JsonResource
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
+            'name' => $this->user->name,
             'status' => $this->status,
             'reviewed_at' => $this->reviewed_at,
         ];

@@ -44,6 +44,11 @@ class OrderModel extends Model implements CrudInterface
     {
         $skip = ($page * $itemPerPage) - $itemPerPage;
         $order = $this->query();
+        if (!empty($filter['name'])) {
+            $order->whereHas('user', function ($query) use ($filter) {
+                $query->where('name', 'LIKE', '%' . $filter['name'] . '%');
+            })->with('user');
+        }
         if (!empty($filter['user_id'])) {
             $order->where('user_id', 'LIKE', '%'.$filter['user_id'].'%');
         }

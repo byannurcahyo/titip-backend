@@ -47,7 +47,7 @@ class ProductRequest extends FormRequest
         return [
             'seller_id' => 'required|exists:sellers,id',
             'name' => 'required|string|max:100',
-            'description' => 'required|string',
+            'description' => 'nullable|string',
             'price' => 'required|numeric',
             'stock' => 'required|integer',
             'photo' => 'nullable|file|image',
@@ -59,7 +59,7 @@ class ProductRequest extends FormRequest
         return [
             'seller_id' => 'required|exists:sellers,id',
             'name' => 'required|string|max:100',
-            'description' => 'required|string',
+            'description' => 'nullable|string',
             'price' => 'required|numeric',
             'stock' => 'required|integer',
             'photo' => 'nullable|file|image',

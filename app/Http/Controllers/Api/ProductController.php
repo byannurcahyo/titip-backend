@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Helpers\Product\ProductHelper;
 use App\Http\Resources\ProductResource;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {

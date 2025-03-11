@@ -33,11 +33,13 @@ class RequestSellerModel extends Model implements CrudInterface
     {
         $skip = ($page * $itemPerPage) - $itemPerPage;
         $request = $this->query();
-        if (!empty($filter['status'])) {
-            $request->where('status', 'LIKE', '%'.$filter['status']);
+        if (!empty($filter['name'])) {
+            $request->whereHas('user', function ($query) use ($filter) {
+            $query->where('name', 'LIKE', '%' . $filter['name'] . '%');
+            })->with('user');
         }
-        if (!empty($filter['user_id'])) {
-            $request->where('user_id', 'LIKE', '%'.$filter['user_id']);
+        if (!empty($filter['status'])) {
+            $request->where('status', 'LIKE', '%' . $filter['status'] . '%');
         }
         $total = $request->count();
         $sort = $sort ?: 'id DESC';

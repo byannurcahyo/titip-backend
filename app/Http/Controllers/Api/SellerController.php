@@ -25,6 +25,7 @@ class SellerController extends Controller
     {
         $filter = [
             'user_id' => $request->user_id ?? '',
+            'name' => $request->name ?? '',
             'store_name' => $request->store_name ?? '',
         ];
         $sellers = $this->sellerHelper->getAll($filter, $request->page ?? 1, $request->per_page ?? 10, $request->sort ?? '');

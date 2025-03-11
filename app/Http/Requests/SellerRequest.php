@@ -51,8 +51,8 @@ class SellerRequest extends FormRequest
     private function updateRules(): array
     {
         return [
-            'user_id' => 'required|exists:users,id',
-            'store_name' => 'required|string|max:100',
+            'user_id' => 'nullable|exists:users,id',
+            'store_name' => 'nullable|string|max:100',
         ];
     }
 }

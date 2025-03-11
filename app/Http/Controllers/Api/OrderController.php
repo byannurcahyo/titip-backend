@@ -23,6 +23,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $filter = [
+            'name' => $request->name ?? '',
             'user_id' => $request->user_id ?? '',
             'status' => $request->status ?? '',
             'invoice_number' => $request->invoice_number ?? '',
