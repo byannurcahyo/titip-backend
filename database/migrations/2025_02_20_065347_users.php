@@ -23,6 +23,8 @@ return new class extends Migration
                 ->nullable();
             $table->string('photo', 100)
                 ->nullable();
+            $table->string('google_id')
+                ->nullable();
             $table->string('updated_security')
                 ->nullable();
             $table->timestamps();

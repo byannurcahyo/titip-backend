@@ -22,6 +22,8 @@ class UserModel extends Authenticatable implements CrudInterface, JWTSubject
         'role',
         'phone_number',
         'photo',
+        'google_id',
+        'updated_security',
     ];
     protected $attributes = [
         'role' => 'user'
@@ -103,16 +105,16 @@ class UserModel extends Authenticatable implements CrudInterface, JWTSubject
     public function getAll(array $filter, int $page = 1, int $itemPerPage = 0, string $sort = '')
     {
         $skip = ($page * $itemPerPage) - $itemPerPage;
-        $user = $this->query();
+        $request = $this->query();
         if (!empty($filter['name'])) {
-            $user->where('name', 'LIKE', '%'.$filter['name'].'%');
+            $request->where('name', 'LIKE', '%'.$filter['name'].'%');
         }
         if (!empty($filter['email'])) {
-            $user->where('email', 'LIKE', '%'.$filter['email'].'%');
+            $request->where('email', 'LIKE', '%'.$filter['email'].'%');
         }
-        $total = $user->count();
-        $sort = $sort ?: 'id DESC';
-        $list = $user->skip($skip)->take($itemPerPage)->orderByRaw($sort)->get();
+        $total = $request->count();
+        $sort = $sort ?: 'name ASC, email ASC';
+        $list = $request->skip($skip)->take($itemPerPage)->orderByRaw($sort)->get();
         return [
             'total' => $total,
             'data' => $list,

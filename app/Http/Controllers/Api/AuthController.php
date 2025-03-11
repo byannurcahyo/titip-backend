@@ -42,7 +42,35 @@ class AuthController extends Controller
             'data' => $login['data'],
         ]);
     }
-
+    /**
+     * Redirect ke provider OAuth
+     *
+     * @param string $provider
+     * @return mixed
+     */
+    public function redirectToGoogle()
+    {
+        return AuthHelper::redirectToGoogle();
+    }
+    /**
+     * Handle callback dari provider OAuth
+     *
+     * @param string $provider
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function handleGoogleCallback()
+    {
+        $result = AuthHelper::handleGoogleCallback();
+        if (!$result['status']) {
+            return response()->json([
+                'success' => false,
+                'message' => $result['error'],
+            ], 422);
+        }
+        $userData = json_encode($result['data']['user']);
+        $redirectUrl = env('FRONTEND_REDIRECT').'/#token='.$result['data']['access_token'].'&user='.urlencode($userData);
+        return redirect()->away($redirectUrl);
+    }
     /**
      * Mengambil profile user yang sedang login
      *

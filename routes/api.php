@@ -30,6 +30,10 @@ Route::prefix('v1')->group(function () {
     Route::post('/auth/login', [AuthController::class, 'login']);
     Route::post('/auth/logout', [AuthController::class, 'logout']);
     Route::get('/auth/profile', [AuthController::class, 'profile'])->middleware(['auth.api']);
+    Route::get('/auth/google/redirect', [AuthController::class, 'redirectToGoogle'])
+        ->middleware('web');
+    Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback'])
+        ->middleware('web');
 
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/users/{id}', [UserController::class, 'show']);
